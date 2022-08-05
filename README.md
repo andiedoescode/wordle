@@ -1,7 +1,7 @@
 # Wordle (Clone)
 Created following FreeCodeCamp tutorial.
 
-![Click here for live demo] (https://fancy-queijadas-509cff.netlify.app)
+[Click here for live demo](https://fancy-queijadas-509cff.netlify.app)
 
 ## How It's Made:
 
