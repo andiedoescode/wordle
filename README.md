@@ -1,7 +1,9 @@
 # Limitless Words (a Wordle clone)
 Created based on a FreeCodeCamp tutorial.
 
-[Click here for live demo](https://fancy-queijadas-509cff.netlify.app)
+[Click here for live demo](https://limitless-words.netlify.app)
+
+
 
 ## How It's Made:
 
