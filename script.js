@@ -69,6 +69,7 @@ function insertLetter(pressedKey) {
     let row = document.getElementsByClassName('letter-row')[ 6 - guessesRemaining ] //Grab current empty row
     let box = row.children[nextLetter] //Get box of index nextLetter
     
+    animateCSS(box, 'pulse') //Adding pulse animation to box from animate just before letter filled
     box.textContent = pressedKey
     box.classList.add('filled-box')
     currentGuess.push(pressedKey) //Adds guessed letter to the end of guess array
@@ -95,12 +96,12 @@ function checkGuess() {
     }
 
     if ( guessString.length != 5 ) { //Alert if guess is not 5 letters on enter
-        alert('Not enough letters!')
+        toastr.error('Not enough letters!')
         return
     }
 
     if ( !WORDS.includes(guessString) ) { //Alert if word is not in the list
-        alert('That word is not in the list!')
+        toastr.error('That word is not in the list!')
         return
     }
 
@@ -113,26 +114,28 @@ function checkGuess() {
         let letterPosition = rightGuess.indexOf(currentGuess[i]) //Check if letter entered is in the target word
         
         if ( letterPosition === -1 ) {//Letter entered is not in target array
-            letterColor = 'grey'
+            letterColor = '#aaaaaa' //grey
         }else {
             if ( currentGuess[i] === rightGuess[i] ) { //If guess letter index and target index for letter are the same, turn green
-                letterColor = 'green'
+                letterColor = '#50b000' //green
             }else { //Letter is in the target word, but not the right index/position
-                letterColor = 'yellow'
+                letterColor = '#ffeb00' //yellow
             }
 
             rightGuess[letterPosition] = '#' 
         }
 
+
         let delay = 250 * i
         setTimeout(() => { //Style letter boxes with a slight time delay
+            animateCSS(box, 'flipInX') //Flip the box
             box.style.backgroundColor = letterColor
             shadeKeyboard( letter, letterColor )
         }, delay)
     }
 
     if ( guessString === rightGuessString ) { //Winner winner chicken dinner
-        alert('You guessed right! Game over!')
+        toastr.success('You guessed right! Game over!')
         guessesRemaining = 0
         return
     }else { //Womp womp, not the right word. Reset current guess and letter index, and decreases guesses remaining
@@ -141,8 +144,8 @@ function checkGuess() {
         nextLetter = 0
 
         if ( guessesRemaining === 0) { //And if the guesses remaining is now 0, player is out of guesses.
-            alert('You ran out of guesses! Game over!')
-            alert(`The right word was ${rightGuessString}`)
+            toastr.error('You ran out of guesses! Game over!')
+            toastr.info(`The right word was ${rightGuessString}`)
         }
     }
 }
@@ -181,3 +184,23 @@ document.getElementById('keyboard').addEventListener('click', (e) => {
 
     document.dispatchEvent( new KeyboardEvent("keyup", {'key':key})) //On click, same event as keyboard press
 })
+
+//Animation
+const animateCSS = (element, animation, prefix = 'animate__') =>
+    new Promise( (resolve, reject) => { //Create new promise and return it
+        const animationName = `${prefix}${animation}`;
+        
+        const node = element //Add animation CSS classes
+        node.style.setProperty( '--animate-duration', '0.3s');
+
+        node.classList.add( `${prefix}animated`, animationName)
+
+        function handleAnimationEnd(event) { //Remove animation CSS classes and resolve Promise on animation end
+            event.stopPropagation()
+            node.classList.remove(`${prefix}animated`, animationName)
+            resolve('Animation ended')
+        }
+
+        node.addEventListener( 'animationend', handleAnimationEnd, {once: true} )
+        
+    })
