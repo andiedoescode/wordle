@@ -3,7 +3,7 @@ Created based on a FreeCodeCamp tutorial.
 
 [Click here for live demo](https://limitless-words.netlify.app)
 
-
+![screenshot](https://user-images.githubusercontent.com/98671035/183322696-18d319dc-4ae0-4c04-9b20-819120ef1ef6.png)
 
 ## How It's Made:
 
