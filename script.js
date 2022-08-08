@@ -191,7 +191,7 @@ const animateCSS = (element, animation, prefix = 'animate__') =>
         const animationName = `${prefix}${animation}`;
         
         const node = element //Add animation CSS classes
-        node.style.setProperty( '--animate-duration', '0.3s');
+        node.style.setProperty( '--animate-duration', '0.2s');
 
         node.classList.add( `${prefix}animated`, animationName)
 
